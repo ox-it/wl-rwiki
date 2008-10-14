@@ -977,8 +977,10 @@ h6 {
   background-color: inherit;
   font-weight: bold;
   font-size: 150%;
+  /* ACM 6 june removed
   font-variant: small-caps;
   border-bottom: 1px solid #3c78b5;
+   */
   padding: 2px;
   margin: 20px 0px 4px 0px;
 }
@@ -987,8 +989,10 @@ h6 {
   background-color: inherit;
   font-weight: bold;
   font-size: 140%;
+  /* ACM 6 june removed
   font-variant: small-caps;
   border-bottom: 1px dotted #3c78b5;
+   */
   padding: 2px;
   margin: 20px 0px 4px 0px;
 }
@@ -1001,7 +1005,9 @@ h6 {
 	  color: inherit;
   background-color: inherit;
   font-size: 130%;
+  /* ACM 6 june removed
   font-variant: small-caps;
+   */
 	padding: 2px;
 	margin: 18px 0px 4px 0px;
 }
@@ -1012,7 +1018,9 @@ h6 {
 	color: inherit;
     background-color: inherit;
     font-size: 120%;
+  /* ACM 6 june removed
     font-variant: small-caps;
+   */
 	padding: 2px;
 	margin: 16px 0px 4px 0px;
 }
@@ -1021,7 +1029,9 @@ h6 {
   color: inherit;
   background-color: inherit;
   font-size: 110%;
+  /* ACM 6 june removed
   font-variant: small-caps;	
+   */
   font-weight: bold;
   padding: 2px;
   margin: 14px 0px 4px 0px;	
@@ -1030,7 +1040,9 @@ h6 {
   color: inherit;
   background-color: inherit;
   font-size: 100%;
+  /* ACM 6 june removed
   font-variant: small-caps;		
+   */
   font-weight: bold;
   padding: 2px;
   margin: 14px 0px 4px 0px;	
@@ -1104,28 +1116,44 @@ h6 {
 
 /* special formatting of a wiki table */
 .wiki-table {
+  /* ACM 6 June added */
+  margin-left: 2em;
   empty-cells: show;
+  /* ACM 6 Jun 08 
   width: 100%;
+   */
   max-width: 100%;
+  
+
+  /* ACM 6 June added */
+  border: thin;
+  border-style: solid;
 }
 
 .wiki-table td {
+  /* ACM 6 Jun 08 
   border-top: 1px solid #5b5b5b;
+  */
   padding: 4px 4px 4px 4px;
 }
 
 .wiki-table th {
+  /* ACM 6 Jun 08 
   border-top: 1px solid #5b5b5b;
+   */
   text-align: left;
   padding: 4px 4px 4px 4px;
   color: inherit;
   font-weight: bold;
   /* background-color: #DDEEFF; */
+  /* ACM 6 Jun 08 
   background: #FFFF66;
+   */
   color: inherit;
 }
 
 .wiki-table .table-odd {
+  background: #eeeeee;
 }
 
 .wiki-table .table-even {
@@ -1153,7 +1181,10 @@ h6 {
 /* wiki lists */
 
 ul.minus { list-style-type: square; }
-ul.star { list-style-type: circle; }
+/* ACM 6 june 08 
+ul.star { list-style-type: circle; } 
+replaced with following */
+ul.star { list-style-type: disc; }
 ol.roman { list-style-type: lower-roman; }
 ol.ROMAN { list-style-type: upper-roman; }
 ol.alpha { list-style-type: lower-alpha; }
