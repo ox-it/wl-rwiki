@@ -40,6 +40,8 @@ import org.sakaiproject.alias.api.AliasService;
 import org.sakaiproject.authz.api.SecurityService;
 import org.sakaiproject.component.api.ComponentManager;
 import org.sakaiproject.component.cover.ServerConfigurationService;
+import org.sakaiproject.content.api.ContentCopy;
+import org.sakaiproject.content.api.ContentCopyContext;
 import org.sakaiproject.db.cover.SqlService;
 import org.sakaiproject.email.api.DigestService;
 import org.sakaiproject.entity.api.Entity;
@@ -140,6 +142,8 @@ public class RWikiObjectServiceImpl implements RWikiObjectService
 
 	private SecurityService securityService;
 
+	private ContentCopy contentCopy;
+
 	/** Configuration: to run the ddl on init or not. */
 	protected boolean autoDdl = false;
 
@@ -190,6 +194,7 @@ public class RWikiObjectServiceImpl implements RWikiObjectService
 		userDirectoryService = (UserDirectoryService) load(cm,UserDirectoryService.class.getName());
 		entityManager.registerEntityProducer(this,
 				RWikiObjectService.REFERENCE_ROOT);
+		contentCopy = (ContentCopy) load(cm, ContentCopy.class.getName());
 		if (ServerConfigurationService.getBoolean("wiki.notification", true)) //$NON-NLS-1$
 		{
 			// Email notification
@@ -1228,6 +1233,10 @@ public class RWikiObjectServiceImpl implements RWikiObjectService
 			return;
 		}
 		
+		// Need todo this before the /site/ prefix gets added.
+		ContentCopyContext context = contentCopy.createCopyContext(fromContext, toContext, true);
+
+		
 		// FIXME this needs to be moved out to a method!
 		if (!fromContext.startsWith("/")) //$NON-NLS-1$
 		{
@@ -1250,6 +1259,7 @@ public class RWikiObjectServiceImpl implements RWikiObjectService
 		List pages = findRWikiSubPages(fromContext.length() > 1 ? fromContext + "/" : fromContext); //$NON-NLS-1$
 		log.debug("=================Found " + pages.size() + " Pages"); //$NON-NLS-1$ //$NON-NLS-2$
 
+		
 		for (Iterator i = pages.iterator(); i.hasNext();)
 		{
 			RWikiObject rwo = (RWikiObject) i.next();
@@ -1260,15 +1270,7 @@ public class RWikiObjectServiceImpl implements RWikiObjectService
 			// if the list exists, is this id in the list ?
 			if (ids != null && ids.size() > 0)
 			{
-				transfer = false;
-				for (Iterator j = ids.iterator(); j.hasNext() && !transfer;)
-				{
-					String id = (String) j.next();
-					if (id.equals(rwo.getRwikiobjectid()))
-					{
-						transfer = true;
-					}
-				}
+				transfer = ids.contains(rwo.getRwikiobjectid());
 			}
 			// ok to transfer
 			if (transfer)
@@ -1280,6 +1282,7 @@ public class RWikiObjectServiceImpl implements RWikiObjectService
 				pageName = NameHelper.localizeName(pageName, NameHelper
 						.localizeSpace(pageName, rwo.getRealm()));
 				pageName = NameHelper.globaliseName(pageName, toContext);
+				String content = contentCopy.convertContent(context, rwo.getContent(), "text/plain", null);
 				try
 				{
 					// create a brand new page containing the content,
@@ -1290,7 +1293,7 @@ public class RWikiObjectServiceImpl implements RWikiObjectService
 					{
 						transferPage = getRWikiObject(pageName, toContext);
 						update(pageName, toContext, transferPage.getVersion(),
-								rwo.getContent(), rwo.getPermissions());
+								content, rwo.getPermissions());
 					}
 					else
 					{
@@ -1305,8 +1308,8 @@ public class RWikiObjectServiceImpl implements RWikiObjectService
 									+ " cannot create pages in realm: " //$NON-NLS-1$
 									+ pageName);
 						}
-						update(pageName, toContext, new Date(), rwo
-								.getContent(), rwo.getPermissions());
+						update(pageName, toContext, new Date(), 
+								content, rwo.getPermissions());
 					}
 
 				}
@@ -1321,6 +1324,7 @@ public class RWikiObjectServiceImpl implements RWikiObjectService
 				log.debug("=============Ignoring transfer of " + rwo.getName()); //$NON-NLS-1$
 			}
 		}
+		contentCopy.copyReferences(context);
 
 	}
 
