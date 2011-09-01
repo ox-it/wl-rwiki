@@ -985,6 +985,7 @@ h6 {
    */
   padding: 2px;
   margin: 20px 0px 4px 0px;
+  width: 99%;
 }
 .heading-h2 {	
   color: inherit;
@@ -997,6 +998,7 @@ h6 {
    */
   padding: 2px;
   margin: 20px 0px 4px 0px;
+  width: 99%;
 }
 
 
@@ -1012,6 +1014,7 @@ h6 {
    */
 	padding: 2px;
 	margin: 18px 0px 4px 0px;
+	width: 99%;
 }
 
 .heading-h4 {	
@@ -1025,6 +1028,7 @@ h6 {
    */
 	padding: 2px;
 	margin: 16px 0px 4px 0px;
+	width: 99%;
 }
 
 .heading-1-1-1, .heading-h5 {
@@ -1036,7 +1040,8 @@ h6 {
    */
   font-weight: bold;
   padding: 2px;
-  margin: 14px 0px 4px 0px;	
+  margin: 14px 0px 4px 0px;
+  width: 99%;	
 }
 .heading-h6 {
   color: inherit;
@@ -1047,7 +1052,8 @@ h6 {
    */
   font-weight: bold;
   padding: 2px;
-  margin: 14px 0px 4px 0px;	
+  margin: 14px 0px 4px 0px;
+  width: 99%;	
 }
 
 .quote {
