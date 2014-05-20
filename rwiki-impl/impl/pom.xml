@@ -185,6 +185,7 @@
       <groupId>org.apache.xmlgraphics</groupId>
       <artifactId>fop</artifactId>
       <version>1.0</version>
+      <type>jar</type>
     </dependency>
     <dependency>
       <groupId>xerces</groupId>
