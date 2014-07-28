@@ -232,10 +232,11 @@ public class XSLTEntityHandler extends BaseEntityHandlerImpl
 
 		try
 		{
+			String skinPrefix = ServerConfigurationService.getString("portal.neoprefix","");
 			String skin = ServerConfigurationService.getString("skin.default"); //$NON-NLS-1$
 			String skinRepo = ServerConfigurationService.getString("skin.repo"); //$NON-NLS-1$
 			request.setAttribute("sakai.skin.repo", skinRepo); //$NON-NLS-1$
-			request.setAttribute("sakai.skin", skin); //$NON-NLS-1$
+			request.setAttribute("sakai.skin", skinPrefix + skin); //$NON-NLS-1$
 
 			HttpSession s = request.getSession();
 			PageVisits pageVisits = (PageVisits) s.getAttribute(XSLTEntityHandler.class
